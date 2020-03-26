@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    <head>
+        <title>L16 - Adding lights and shadows</title>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    </head>
+    
+    <body>
+        <a-scene>
+            <!-- Asset Management System -->
+            <a-assets>
+                <img id="chao" src="assets/piso.jpg">
+            </a-assets>
+            
+            <!-- Iluminação padrão na cena A-Frame -->
+            
+            <!-- Uma Luz Ambiente
+            <a-entity light="type: ambient;
+                             color: #BBB">
+            </a-entity>
+            -->
+
+            <!-- Uma Luz direcional
+            <a-entity light="type: directional;
+                             color: #FFFFFF;
+                             intensity: 0.6;
+                             castShadow: true"
+                      position="-0.5 1 1">
+            </a-entity>
+            -->
+            
+            <!-- Céu -->
+            <a-sky color="#212121"></a-sky>
+            
+            <!-- Chão -->
+            <a-plane src="#chao"
+                     rotation="-90 0 0" scale="5000 5000 1" repeat="1000 1000"
+                     shadow="receive: true">
+            </a-plane>
+            
+            <!-- Câmera -->
+            <a-entity position="0 0 5">
+                <a-camera></a-camera>
+            </a-entity>
+        
+
+            <!-- Painel Cizento -->
+            <a-box id="painel-cinza"
+                    color="#E0E0E0" scale="5 0.1 1" position="0 4 0"
+                   shadow="cast: true">
+            </a-box>
+            
+            <!-- Caixa Amarela -->
+            <a-box id="caixa-amarela"
+                   color="#FFEB3B" scale="0.5 0.5 0.5" position="-1 1 0"
+                   shadow="cast: true" shader="flat">
+            </a-box>
+            
+            <!-- Caixa Laranja -->
+            <a-box id="caixa-laranja"
+                   color="#FF5722" scale="0.5 0.5 0.5" position="1 1 0"
+                   shadow="cast: true">
+            </a-box>
+            
+            <!-- Luz Ambiente -->
+            <a-entity id="luz-ambiente"
+                    light="type: ambient; intensity: 0.2">
+            </a-entity>
+            
+            <!-- Luz Branca | Point -->
+            <a-entity id="luz-ponto-branca"
+                        light="type: point;
+                             intensity: 0.8;
+                             distance: 10;
+                             castShadow: true"
+                      position="0 2 1.5">
+            </a-entity>
+            
+            <!-- Luz Rosa | Spot -->
+            <a-entity id="luz-ponto-rosa"
+                        light="type: spot;
+                             target: #caixa-laranja;
+                             color: #C40070;
+                             angle: 30;
+                             penumbra: 0.1;
+                             castShadow: true"
+                      position="0 3 1">
+            </a-entity>
+            
+        </a-scene>
+    </body>
+</html>
