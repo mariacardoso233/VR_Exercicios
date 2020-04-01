@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Animações Compostas</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+</head>
+<body>
+    <!-- #### DOCUMENTAÇÂO -->
+    <!-- 
+        https://aframe.io/docs/1.0.4/components/animation.html 
+        https://aframe.io/docs/1.0.0/components/animation.html#easings
+        https://aframe.io/docs/1.0.0/components/text.html#generating-sdf-fonts
+        https://msdf-bmfont.donmccurdy.com/ (Gerador de texto com caracteres especiais)
+    -->
+    <a-scene>
+
+        <!-- Camera -->
+        <a-entity position="0 0 8">
+            <a-camera></a-camera>
+        </a-entity>
+
+        <!-- Céu -->
+        <a-sky color="#333"></a-sky>
+
+        <!-- Piso -->
+        <a-plane color="#15212b" roughness="1" scale="1000 1000 1" repeat="2 2" rotation="-90 0 0"></a-plane>
+
+        <!-- Ponto de luz-->
+        <a-light
+        type="ambient"
+        color="#c0c0c0"
+        intensity="0.5"></a-light>
+        </a-light>
+
+        <!-- Ponto de luz-->
+        <a-light
+        type="point"
+        color="#c0c0c0"
+        intensity="1.5"
+        position="0 3.5 2">
+        </a-light>
+
+        <!-- #### EXEMPLO #01 ######################################################## -->
+        <!-- #### Caixa com Animação de Rotação, Escala e Opacidade ################## -->
+
+        <!-- Texto com as propriedades da animação de Rotação-->
+        <a-entity
+        geometry="primitive: plane; width: 8; height: 2"
+        position="-7.5 1.5 0"
+        material="color: #FF0000; roughness:1;"
+        text="font:	fonts/ARIAL.TTF-msdf.json; negate:false;
+        width: 10; 
+        wrapCount: 90; 
+        color: #000;
+        align: center;
+        value:ANIMAÇÃO 01 
+        property: rotation | to: 0 -360 0 | loop: true | dur: 5000  | easing: linear
+        
+        ANIMAÇÃO 02
+        property: scale | to: 2 1 5 | loop: true | dir: alternate | dur: 5000 | easing: easeInOutElastic
+        
+        ANIMAÇÃO 03
+        property: opacity | from: 1 | to: 0 | loop: true | dir: alternate | dur: 1500
+        ">
+        </a-entity>
+
+                    <!-- Primitiva Box (caixa) com a animação combinada da rotação, escala e opacidade -->   
+        <a-box color="red"
+        position="-7 4 0"
+        animation__rotacao="property: rotation;
+        from: 0 0 0;
+        to: 0 -360 0;
+        loop: true;
+        dur: 5000;
+        easing: linear"
+                animation__escala="property: scale;
+                to: 0.2 1 5;
+                loop: true;
+                dir: alternate;
+                dur: 5000;
+                easing: easeInOutElastic"
+                animation__opacidade="property: opacity;
+                            from: 1;
+                            to: 0;
+                            loop: true;
+                            dir: alternate;
+                            dur: 2500">
+        </a-box>
+
+        <!-- #### EXEMPLO #02 ############################################### -->
+        <!-- #### Cubo em órbita da Esfera com transição de cor ############# -->
+
+        <!-- Texto com as propriedades da animação de rotação da órbita do Cubo-->
+        <a-entity
+        geometry="primitive: plane; width: 7; height: 2"
+        position="0 1.5 0"
+        material="color: grey; roughness:1;"
+        text="width: 10; 
+        wrapCount: 90; 
+        align: center;
+        baseline: bottom;
+        value: property: rotation | to: 0 360 0 | loop: true | dur: 5000 | easing: linear">
+        </a-entity>
+
+        <!-- Texto com as propriedades da animação de rotação do Cubo-->
+        <a-entity
+        geometry="primitive: plane; width: 6.5; height: 1"
+        position="0 0.8 0.01"
+        material="color: green; roughness:1;"
+        text="width: 10; 
+        wrapCount: 90; 
+        align: center;
+        value: property: rotation | to: 0 -360 0 | loop: true | dur: 5000 | easing: linear">
+        </a-entity>
+
+        <!-- Entidade neutra com a animação de rotação da órbita do Cubo-->
+        <a-entity position="0 4 0"
+                    animation="property: rotation;
+                                to: 0 -360 0;
+                                loop: true;
+                                dur: 5000;
+                                easing: linear">
+
+            <!-- Cubo verde com a animação de rotação sobre si mesmo-->
+            <a-box color="green"
+                    position="2 0 0"
+                    animation="property: rotation;
+                                to: 0 -360 0;
+                                loop: true;
+                                dur: 5000;
+                                easing: linear">
+            </a-box>
+        </a-entity>
+
+        <!-- Texto com as propriedades da animação de transição de cor da Esfera -->
+        <a-entity
+        geometry="primitive: plane; width: 8.5; height: 1"
+        position="0 7 0"
+        material="color: #00AAFF; roughness:1;"
+        text="width: 10; 
+        wrapCount: 90; 
+        color: #000;
+        align: center;
+        value: property: material.color | from: #00AAFF | to: #3f9306 | loop: true | dir: alternate | dur: 1500">
+        </a-entity>
+        
+        <!-- Esfera a animação de transição da cor azul para verde -->
+        <a-sphere color="#0000AA"
+                radius="0.5"
+                position="0 5 0"
+                animation="property: material.color;
+                            from: #00AAFF;
+                            to: #3f9306;
+                            loop: true;
+                            dir: alternate;
+                            dur: 1500">
+        </a-sphere>
+
+        <!-- #### EXEMPLO #03 ######################################### -->
+        <!-- #### Caixa com Animação de Parafuso ###################### -->
+
+        <!-- Texto com as propriedades da animação-->
+        <a-entity
+        geometry="primitive: plane; width: 10; height: 2"
+        position="8.5 1.5 0"
+        material="color: #FFAA00; roughness:1;"
+        text="font:	fonts/ARIAL.TTF-msdf.json; negate:false;
+        width: 10;
+        color: #000; 
+        wrapCount: 90; 
+        align: center;
+        value:ANIMAÇÃO 01
+        property: position | from: 8 4 -2 | to: 8 4 2 | loop: true | dir: alternate | dur: 3000 | easing: easeInOutCubic
+
+        ANIMAÇÃO 02
+        property: rotation | to: 0 0 360 | loop: true | dur: 1000 | easing: linear
+        ">
+        </a-entity>
+
+        <!-- Primitiva Box (caixa) com a animação de rotação e posição-->
+        <a-box color="#FFAA00"
+        position="0 0 0"
+        animation__rotacao="property: rotation;
+        to: 0 0 360;
+        loop: true;
+        dur: 1000;
+        easing: linear"
+        animation__posicao="property: position;
+        from: 8 4 -2;
+        to: 8 4 2;
+        loop: true;
+        dir: alternate;
+        dur: 3000;
+        easing: easeInOutCubic"
+        >
+        </a-box>
+    
+    </a-scene>
+
+</body>
+</html>
+
